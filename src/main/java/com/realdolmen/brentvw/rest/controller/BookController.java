@@ -34,8 +34,12 @@ public class BookController {
 
     @GET
     @Path("{id}")
-    public Book findBookById(@PathParam("id") Integer id) {
-        return bookRepository.findBookById(id);
+    public Book findBookById(@PathParam("id") Integer id) throws BookNotFoundException {
+        Book b = bookRepository.findBookById(id);
+        if(b == null) {
+            throw new BookNotFoundException();
+        }
+        return b;
     }
 
     @GET
